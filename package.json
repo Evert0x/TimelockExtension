@@ -19,6 +19,6 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2",
-    "prettier-plugin-solidity": "^1.0.0-beta.18"
+    "prettier-plugin-solidity": "^1.0.0-beta.19"
   }
 }
