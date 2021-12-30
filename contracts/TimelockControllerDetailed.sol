@@ -7,6 +7,7 @@ pragma solidity ^0.8.0;
 
 import '@openzeppelin/contracts/governance/TimelockController.sol';
 
+import './Util.sol';
 import 'hardhat/console.sol';
 
 contract TimelockControllerDetailed is TimelockController {
@@ -32,19 +33,13 @@ contract TimelockControllerDetailed is TimelockController {
     address[] memory executors
   ) TimelockController(minDelay, proposers, executors) {}
 
-  function getSelector(bytes memory _data) internal pure returns (bytes4 sig) {
-    assembly {
-      sig := mload(add(_data, 32))
-    }
-  }
-
   function _validateMinDelay(
     address _target,
     bytes calldata _data,
     uint256 _delay
   ) internal view {
     // Get function selector of call that is about to be scheduled
-    bytes4 selector = getSelector(_data);
+    bytes4 selector = Util.getSelector(_data);
 
     if (_target == address(this) && selector == UPDATE_DETAILED_MIN_DELAY) {
       // A detailed delay of a function is going to be updated

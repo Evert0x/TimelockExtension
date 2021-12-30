@@ -25,7 +25,7 @@ contract TimelockControllerDetailedDirect is TimelockControllerDetailed {
     uint256 _value,
     bytes calldata _data
   ) external onlyRole(PROPOSER_ROLE) {
-    bytes4 selector = getSelector(_data);
+    bytes4 selector = Util.getSelector(_data);
 
     require(
       detailedMinDelay[_target][selector] == DIRECT_EXECUTION_DELAY,
@@ -35,6 +35,6 @@ contract TimelockControllerDetailedDirect is TimelockControllerDetailed {
     (bool success, ) = _target.call{ value: _value }(_data);
     require(success, 'TimelockControllerDetailedDirect: underlying transaction reverted');
 
-    emit DirectCallExecuted(target, value, data);
+    emit DirectCallExecuted(_target, _value, _data);
   }
 }

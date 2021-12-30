@@ -1,15 +1,20 @@
-# Basic Sample Hardhat Project
+# Timelock extensions
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+> Warning: untest & unaudited
 
-Try running some of the following tasks:
+The default OZ timelock can not be configured to function level. The goal of this codebase is to
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+- Have custom min delay timelock for specific functions
+- Have custom proposer rights for specific functions
+
+## TimelockControllerDetailed.sol
+
+This contract allows users to configure a `minDelay` per contract-function combination. It still uses the global `minDelay` for every other function.
+
+## TimelockControllerDetailedDirect.sol
+
+This contract extends `TimelockControllerDetailed` by also providing a way to skip the timelocks 'schedule --> execute' flow and do an immediate execute.
+
+## TimelockProposer.sol
+
+In case you want a proposer to only propose specific functions
